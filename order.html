@@ -121,14 +121,23 @@ textarea{
   gap:10px;
 }
 
-/* QR Section */
+/* QR Section - Updated Styles */
 .qr-box{
-  border:2px dashed var(--gold);
+  /* এখানে ড্যাশেড বর্ডার বাদ দেওয়া হয়েছে */ 
   border-radius:12px;
-  padding:20px;
+  padding:0; /* প্যাডিং ০ করা হলো */
   text-align:center;
   margin:20px 0;
-  height:220px;
+  height:auto; /* উচ্চতা অটো করা হলো */
+  overflow:hidden; /* ইমেজ যাতে বক্সের বাইরে না যায় */
+}
+
+/* QR Image Style */
+.qr-box img {
+    width: 100%; /* বক্সের পুরো প্রস্থ জুড়ে থাকবে */
+    height: auto; /* অনুপাত ঠিক রাখবে */
+    display: block; /* ডিসপ্লে ব্লক করা হলো */
+    border-radius: 12px; /* qr-box এর সাথে সামঞ্জস্য রাখতে */
 }
 
 /* Button */
@@ -162,7 +171,6 @@ button:hover{
 
 <div class="container">
 
-  <!-- PRODUCT PREVIEW -->
   <div class="product-box">
     <img id="pImg" alt="Product">
     <div class="product-info">
@@ -172,7 +180,6 @@ button:hover{
     </div>
   </div>
 
-  <!-- ORDER FORM -->
   <form id="orderForm">
 
     <div class="section-title">Delivery Details / ডেলিভারি বিবরণ</div>
@@ -223,7 +230,7 @@ button:hover{
     </div>
 
     <div class="qr-box">
-      <div class="section-title"><img src="QR.jpg" alt="Scan & Pay / স্ক্যান এবং পে"></div>
+      <img src="QR.jpg" alt="Scan & Pay QR Code" loading="lazy">
     </div>
 
     <div class="section-title">Payment Details / পেমেন্ট বিবরণ</div>
