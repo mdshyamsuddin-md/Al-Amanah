@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Now | Al-Amanah</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold:#c9a24d;
+  --dark:#111;
+}
+
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f5f5f5;
+  position:relative;
+}
+
+/* Header */
+header{
+  background:#000;
+  color:#fff;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:600;
+  letter-spacing:1px;
+}
+
+/* Container */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+/* Product Box */
+.product-box{
+  background:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+  margin-bottom:25px;
+}
+
+.product-box img{
+  display:none; /* ছবি দেখানো হবে না */
+}
+
+.product-info{
+  padding:15px;
+}
+
+.product-info h2{
+  margin:0;
+  font-size:24px;
+  color:var(--gold); /* ✅ গোল্ডেন */
+}
+
+.product-info p{
+  font-size:14px;
+  color:#555;
+}
+
+.price{
+  margin-top:10px;
+  font-size:20px;
+  color:var(--gold);
+  font-weight:600;
+}
+
+/* Form */
+form{
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+
+/* Section Titles */
+.section-title{
+  font-weight:600;
+  margin:15px 0 10px;
+  color:#333;
+}
+
+/* Inputs */
+.input-group{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:12px;
+}
+.input-group label{
+  font-size:13px;
+  color:#333;
+  margin-bottom:3px;
+}
+input,textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+textarea{
+  resize:none;
+}
+
+/* Payment Group */
+.payment-group{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+/* QR Section */
+.qr-box{
+  border:2px dashed var(--gold);
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  margin:20px 0;
+  height:220px;
+}
+
+/* Button */
+button{
+  width:100%;
+  padding:14px;
+  background:var(--gold);
+  color:#000;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+@media(max-width:600px){
+  .payment-group{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>Al-Amanah / আল-আমানাহ</header>
+
+<div class="container">
+
+  <!-- PRODUCT PREVIEW -->
+  <div class="product-box">
+    <img id="pImg" alt="Product">
+    <div class="product-info">
+      <h2 id="pName">Product Name / পণ্যের নাম</h2>
+      <div class="price">₹ <span id="pPrice">0</span></div>
+      <p id="pDesc">Premium product from Al-Amanah / আল-আমানাহ থেকে প্রিমিয়াম পণ্য</p>
+    </div>
+  </div>
+
+  <!-- ORDER FORM -->
+  <form id="orderForm">
+
+    <div class="section-title">Delivery Details / ডেলিভারি বিবরণ</div>
+
+    <div class="input-group">
+      <label>Full Name / পুরো নাম</label>
+      <input type="text" required>
+    </div>
+
+    <div class="input-group">
+      <label>Mobile Number / মোবাইল নম্বর</label>
+      <input type="tel" required>
+    </div>
+
+    <div class="input-group">
+      <label>Email Address / ইমেইল</label>
+      <input type="email">
+    </div>
+
+    <div class="input-group">
+      <label>House / Flat No. / হাউজ / ফ্ল্যাট নং</label>
+      <input type="text" required>
+    </div>
+
+    <div class="input-group">
+      <label>Street / Road / রাস্তা</label>
+      <input type="text" required>
+    </div>
+
+    <div class="input-group">
+      <label>Area / Locality / এলাকা</label>
+      <input type="text" required>
+    </div>
+
+    <div class="input-group">
+      <label>City / শহর</label>
+      <input type="text" required>
+    </div>
+
+    <div class="input-group">
+      <label>State / রাজ্য</label>
+      <input type="text" required>
+    </div>
+
+    <div class="input-group">
+      <label>PIN / পিন</label>
+      <input type="text" required>
+    </div>
+
+    <div class="qr-box">
+      <div class="section-title">Scan & Pay / স্ক্যান এবং পে</div>
+    </div>
+
+    <div class="section-title">Payment Details / পেমেন্ট বিবরণ</div>
+
+    <div class="payment-group">
+      <div class="input-group">
+        <label>Bank Name / ব্যাংক নাম</label>
+        <input type="text" required>
+      </div>
+      <div class="input-group">
+        <label>Transaction ID / লেনদেন আইডি</label>
+        <input type="text" required>
+      </div>
+      <div class="input-group">
+        <label>UTR Number / ইউটিআর</label>
+        <input type="text" required>
+      </div>
+    </div>
+
+    <button type="submit">Confirm Order / অর্ডার নিশ্চিত করুন</button>
+
+  </form>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA6G_gK8kYC8I_clx_q0FCG4VXKZXesZOw",
+  authDomain: "al-amanah-94f76.firebaseapp.com",
+  projectId: "al-amanah-94f76",
+  storageBucket: "al-amanah-94f76.firebasestorage.app",
+  messagingSenderId: "84938334074",
+  appId: "1:84938334074:web:9aef552e8a2cdf44ef40c3"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ===== PRODUCT DATA FROM URL ===== */
+const params = new URLSearchParams(window.location.search);
+
+const productName = params.has("name") ? decodeURIComponent(params.get("name")) : "Product / পণ্য";
+const productPrice = params.has("price") ? params.get("price") : "0";
+const productDesc = params.has("desc") ? decodeURIComponent(params.get("desc")) : "Premium product from Al-Amanah / প্রিমিয়াম পণ্য";
+
+document.getElementById("pName").innerText = productName;
+document.getElementById("pPrice").innerText = productPrice;
+document.getElementById("pDesc").innerText = productDesc;
+
+/* ===== ORDER SUBMIT ===== */
+document.getElementById("orderForm").onsubmit = async e=>{
+  e.preventDefault();
+  const f = e.target;
+
+  try {
+    const docRef = await addDoc(collection(db,"orders"),{
+      productName,
+      price: productPrice,
+      customer:{
+        name:f[0].value,
+        mobile:f[1].value,
+        email:f[2].value,
+        house:f[3].value,
+        street:f[4].value,
+        area:f[5].value,
+        city:f[6].value,
+        state:f[7].value,
+        pin:f[8].value
+      },
+      payment:{
+        bank:f[9].value,
+        transactionId:f[10].value,
+        utr:f[11].value
+      },
+      status:"placed",
+      timestamp:serverTimestamp()
+    });
+
+    // Directly go to tracking page
+    window.location.href = "tracking.html?id=" + docRef.id;
+  } catch(err) {
+    alert("Error placing order / অর্ডার দেওয়ার সময় ত্রুটি: " + err);
+  }
+};
+</script>
+
+</body>
+</html>

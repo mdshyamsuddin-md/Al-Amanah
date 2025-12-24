@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Tracking | Al-Amanah</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold:#c9a24d;
+  --dark:#111;
+  --grey:#888;
+}
+
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f5f5f5;
+  color:#000;
+}
+
+/* Header */
+header{
+  background:#000;
+  color:#fff;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:600;
+  letter-spacing:1px;
+}
+
+/* Container */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+/* Product Info */
+.product-info{
+  background:#fff;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+
+.product-info h2{
+  margin:0;
+  font-size:24px;
+}
+
+.price{
+  font-size:20px;
+  font-weight:600;
+  color:var(--gold);
+}
+
+/* Timeline */
+.timeline{
+  border-left:3px solid var(--gold);
+  padding-left:25px;
+  margin-top:20px;
+}
+
+.step{
+  margin-bottom:25px;
+  position:relative;
+  color:var(--grey);
+}
+
+.step::before{
+  content:"";
+  width:16px;
+  height:16px;
+  background:#333;
+  border-radius:50%;
+  position:absolute;
+  left:-35px;
+  top:2px;
+}
+
+.step.active{
+  color:#000;
+  font-weight:600;
+}
+
+.step.active::before{
+  background:var(--gold);
+}
+
+.cancel{
+  color:red;
+  margin-top:20px;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<header>Order Tracking / অর্ডার ট্র্যাকিং</header>
+
+<div class="container">
+
+  <!-- PRODUCT INFO -->
+  <div class="product-info">
+    <h2 id="pName">Product Name / পণ্যের নাম</h2>
+    <div class="price">₹ <span id="pPrice">0</span></div>
+  </div>
+
+  <!-- TRACKING TIMELINE -->
+  <div class="timeline">
+    <div class="step" id="step1">🧾 Order Placed / অর্ডার দেওয়া হয়েছে</div>
+    <div class="step" id="step2">✔ Order Confirmed / অর্ডার নিশ্চিত হয়েছে</div>
+    <div class="step" id="step3">📦 Packaging / প্যাকেজিং</div>
+    <div class="step" id="step4">🚚 Delivery Processing / ডেলিভারি প্রক্রিয়াধীন</div>
+    <div class="step" id="step5">⭐ Completed / সম্পন্ন হয়েছে</div>
+  </div>
+
+  <!-- CANCEL REASON -->
+  <p class="cancel" id="cancelReason"></p>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA6G_gK8kYC8I_clx_q0FCG4VXKZXesZOw",
+  authDomain: "al-amanah-94f76.firebaseapp.com",
+  projectId: "al-amanah-94f76",
+  storageBucket: "al-amanah-94f76.firebasestorage.app",
+  messagingSenderId: "84938334074",
+  appId: "1:84938334074:web:9aef552e8a2cdf44ef40c3"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* GET ORDER ID FROM URL */
+const params = new URLSearchParams(window.location.search);
+const orderId = params.get("id");
+
+if(orderId){
+  const docRef = doc(db,"orders",orderId);
+  getDoc(docRef).then(docSnap=>{
+    if(docSnap.exists()){
+      const data = docSnap.data();
+      document.getElementById("pName").innerText = data.productName || "Product / পণ্য";
+      document.getElementById("pPrice").innerText = data.price || "0";
+
+      // Update timeline
+      const status = data.status || "placed";
+      const steps = ["placed","confirmed","packaging","delivery","completed"];
+      steps.forEach((s,i)=>{
+        if(steps.indexOf(status) >= i){
+          document.getElementById("step"+(i+1)).classList.add("active");
+        }
+      });
+
+      // Cancel reason
+      if(data.cancelReason){
+        document.getElementById("cancelReason").innerText = "Cancel Reason / বাতিলের কারণ: " + data.cancelReason;
+      }
+
+    } else {
+      alert("Order not found / অর্ডার পাওয়া যায়নি");
+    }
+  }).catch(err=>{
+    alert("Error fetching order / অর্ডার আনার সময় ত্রুটি: " + err);
+  });
+}else{
+  alert("No order ID provided / কোনো অর্ডার আইডি পাওয়া যায়নি");
+}
+</script>
+
+</body>
+</html>

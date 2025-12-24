@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Al-Amanah | Premium Attar</title>
+
+<style>
+:root{
+  --bg:#0b0f0c;
+  --card:#141b16;
+  --gold:#f1c40f;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Segoe UI, sans-serif;
+  background:var(--bg);
+  color:#fff;
+}
+
+/* Overlay */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  z-index:15;
+}
+.overlay.active{display:block}
+
+/* Top Bar */
+.topbar{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  padding:12px 14px;
+  background:#0f1a12;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.menu-btn{font-size:26px;cursor:pointer}
+.brand{text-align:center;color:var(--gold);font-size:22px}
+.search{
+  width:160px;
+  padding:8px 12px;
+  border-radius:20px;
+  border:none;
+  background:#1a2b1f;
+  color:#fff;
+}
+
+/* Side Menu */
+.side-menu{
+  position:fixed;
+  top:0;
+  left:-260px;
+  width:250px;
+  height:100%;
+  background:#121c15;
+  padding:20px;
+  transition:.3s;
+  z-index:30;
+}
+.side-menu.active{left:0}
+
+.side-menu div{
+  padding:15px 0;
+  border-bottom:1px solid #1f3d2b;
+  color:var(--gold);
+  cursor:pointer;
+}
+
+/* Page */
+.page{padding:15px}
+
+/* Product Card */
+.product{
+  background:var(--card);
+  border-radius:18px;
+  margin-bottom:20px;
+  overflow:hidden;
+}
+
+.product img{
+  width:100%;
+  height:360px;
+  object-fit:cover;
+  border-bottom:1px solid #1f3d2b;
+}
+
+.info{padding:15px}
+.info p{color:#ccc}
+
+.info button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(45deg,var(--gold),#d4ac0d);
+  font-size:16px;
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- SIDE MENU -->
+<div class="side-menu" id="menu">
+  <div onclick="openCustomerSupport()">📞 Customer Support</div>
+  <div onclick="openOfferPage()">🎁 Offer</div>
+  <div onclick="openTrackingPage()">📦 Order Tracking</div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  <div class="brand">Al-Amanah</div>
+  <input class="search" id="search" placeholder="Search attar">
+</div>
+
+<!-- HOME -->
+<div id="home" class="page"></div>
+
+<script>
+/* PAGE LINKS */
+const ORDER_PAGE_URL    = "order.html";
+const SUPPORT_PAGE_URL  = "support.html";
+const OFFER_PAGE_URL    = "offer.html";
+const TRACKING_PAGE_URL = "tracking.html";
+
+/* PRODUCT LIST */
+const products = [
+
+  /* ✅ Active Product 1 */
+  {
+    name: "Rose Attar",
+    description: "Premium long lasting rose fragrance",
+    price: 500,
+    offerPrice: 420,
+    image: "image/watermark.png"
+  },
+
+  /* ✅ Active Product 2 */
+  {
+    name: "Oud Attar",
+    description: "Strong Arabic oud fragrance",
+    price: 800,
+    offerPrice: 650,
+    image: "image/watermark.png"
+    
+  },
+
+  /* ==================================================
+     🔽 এখান থেকে নতুন প্রোডাক্ট এড করুন
+     Comment খুললেই প্রোডাক্ট + ছবি শো হবে
+  ================================================== */
+  /*
+  {
+    name: "Musk Attar",
+    description: "Soft & sweet musk fragrance",
+    price: 600,
+    offerPrice: 480,
+    image: "image/watermark.png"
+  }
+  */
+
+];
+
+const home = document.getElementById("home");
+
+/* RENDER PRODUCTS */
+function renderProducts(list){
+  home.innerHTML = "";
+  list.forEach(p=>{
+    home.innerHTML += `
+      <div class="product">
+        <img src="${p.image}" alt="${p.name}">
+        <div class="info">
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+          <p>
+            <del>₹${p.price}</del>
+            <span style="color:#f1c40f;font-size:18px">
+              ₹${p.offerPrice}
+            </span>
+          </p>
+          <button onclick="goToOrder('${p.name}', ${p.offerPrice})">
+  Order Now
+</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+renderProducts(products);
+
+/* SEARCH */
+document.getElementById("search").addEventListener("input",function(){
+  const value = this.value.toLowerCase();
+  renderProducts(
+    products.filter(p => p.name.toLowerCase().includes(value))
+  );
+});
+
+/* ORDER PAGE */
+function goToOrder(name, price){
+  window.location.href =
+    "order.html" +
+    "?name=" + encodeURIComponent(name) +
+    "&price=" + price;
+}
+
+/* MENU */
+function toggleMenu(){
+  menu.classList.add("active");
+  overlay.classList.add("active");
+}
+function closeMenu(){
+  menu.classList.remove("active");
+  overlay.classList.remove("active");
+}
+
+function openCustomerSupport(){ window.location.href = SUPPORT_PAGE_URL }
+function openOfferPage(){ window.location.href = OFFER_PAGE_URL }
+function openTrackingPage(){ window.location.href = TRACKING_PAGE_URL }
+</script>
+
+</body>
+</html>
