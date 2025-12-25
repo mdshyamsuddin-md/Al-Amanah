@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>Al-Amanah | Premium Attar</title>
 
+<meta name="viewport" content="width=400, user-scalable=no">
+
 <style>
 :root{
   --bg:#0b0f0c;
@@ -15,9 +17,21 @@
 
 body{
   margin:0;
-  font-family:Segoe UI, sans-serif;
+  background:#000;
+  display:flex;
+  justify-content:center;
+}
+
+/* 🔒 FIXED 400px FRAME */
+.app-frame{
+  width:400px;
+  max-width:400px;
+  min-height:100vh;
   background:var(--bg);
   color:#fff;
+  font-family:Segoe UI, sans-serif;
+  overflow:hidden;
+  position:relative;
 }
 
 /* Overlay */
@@ -33,27 +47,37 @@ body{
 /* Top Bar */
 .topbar{
   display:grid;
-  grid-template-columns:auto 1fr auto;
+  grid-template-columns:60px 1fr 140px;
   align-items:center;
-  padding:12px 14px;
+  padding:14px;
   background:#0f1a12;
   position:sticky;
   top:0;
   z-index:20;
 }
 
-.menu-btn{font-size:26px;cursor:pointer}
-.brand{text-align:center;color:var(--gold);font-size:22px}
+.menu-btn{
+  font-size:32px;
+  cursor:pointer;
+}
+
+.brand{
+  text-align:center;
+  color:var(--gold);
+  font-size:26px;
+  font-weight:600;
+}
+
 .search{
-  width:160px;
-  padding:8px 12px;
+  width:100%;
+  padding:10px 12px;
   border-radius:20px;
   border:none;
   background:#1a2b1f;
   color:#fff;
 }
 
-/* Side Menu */
+/* Side Menu (ICON ONLY) */
 .side-menu{
   position:fixed;
   top:0;
@@ -68,7 +92,9 @@ body{
 .side-menu.active{left:0}
 
 .side-menu div{
-  padding:15px 0;
+  padding:22px 0;
+  font-size:30px;
+  text-align:center;
   border-bottom:1px solid #1f3d2b;
   color:var(--gold);
   cursor:pointer;
@@ -87,9 +113,10 @@ body{
 
 .product img{
   width:100%;
-  height:100%;
+  height:auto;
   object-fit:cover;
   border-bottom:1px solid #1f3d2b;
+  cursor:pointer;
 }
 
 .info{padding:15px}
@@ -105,17 +132,20 @@ body{
   font-size:16px;
   cursor:pointer;
 }
-
 </style>
 </head>
 
 <body>
+
+<div class="app-frame">
+
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <!-- SIDE MENU -->
 <div class="side-menu" id="menu">
-  <div onclick="openCustomerSupport()">📞 Customer Support</div>
-  <div onclick="openOfferPage()">🎁 Offer</div>
+  <div onclick="openCustomerSupport()">
+    📞CustomerSupport</div>
+  <div onclick="openOfferPage()">🎁 Gift</div>
   <div onclick="openTrackingPage()">📦 Order Tracking</div>
 </div>
 
@@ -123,45 +153,40 @@ body{
 <div class="topbar">
   <div class="menu-btn" onclick="toggleMenu()">☰</div>
   <div class="brand">Al-Amanah</div>
-  <input class="search" id="search" placeholder="Search attar">
+  <input class="search" id="search" placeholder="Search">
 </div>
 
 <!-- HOME -->
 <div id="home" class="page"></div>
 
+</div>
+
 <script>
-/* PAGE LINKS */
 const ORDER_PAGE_URL    = "order.html";
 const SUPPORT_PAGE_URL  = "support.html";
 const OFFER_PAGE_URL    = "offer.html";
 const TRACKING_PAGE_URL = "tracking.html";
+ // 🔗 image click page
 
-/* PRODUCT LIST */
 const products = [
 
-  /* ✅ Active Product 1 */
   {
     name: "Rose Attar",
     description: "Premium long lasting rose fragrance",
     price: 500,
     offerPrice: 420,
-    image: "watermark.png"
+    image: "image/watermark.png"
   },
 
-  /* ✅ Active Product 2 */
   {
     name: "Oud Attar",
     description: "Strong Arabic oud fragrance",
     price: 800,
     offerPrice: 650,
-    image: "watermark.png"
-    
+    image: "image/watermark.png"
   },
 
-  /* ==================================================
-     🔽 এখান থেকে নতুন প্রোডাক্ট এড করুন
-     Comment খুললেই প্রোডাক্ট + ছবি শো হবে
-  ================================================== */
+  /* 🔽 এখান থেকে নতুন প্রোডাক্ট এড করুন */
   /*
   {
     name: "Musk Attar",
@@ -171,55 +196,54 @@ const products = [
     image: "image/watermark.png"
   }
   */
-
+    {
+    name: "Oud Attar",
+    description: "Strong Arabic oud fragrance",
+    price: 8000,
+    offerPrice: 6500,
+    image: "image/watermark.png"
+  },
 ];
 
 const home = document.getElementById("home");
 
-/* RENDER PRODUCTS */
 function renderProducts(list){
   home.innerHTML = "";
   list.forEach(p=>{
     home.innerHTML += `
       <div class="product">
-        <img src="${p.image}" alt="${p.name}">
+        <img src="${p.image}" alt="${p.name}"
+onclick="openProduct('${p.name}', ${p.offerPrice})"
+style="cursor:pointer">
         <div class="info">
           <h3>${p.name}</h3>
           <p>${p.description}</p>
           <p>
             <del>₹${p.price}</del>
-            <span style="color:#f1c40f;font-size:18px">
-              ₹${p.offerPrice}
-            </span>
+            <span style="color:#f1c40f;font-size:18px"> ₹${p.offerPrice}</span>
           </p>
           <button onclick="goToOrder('${p.name}', ${p.offerPrice})">
-  Order Now
-</button>
+            Order Now
+          </button>
         </div>
       </div>
     `;
   });
 }
-
 renderProducts(products);
 
-/* SEARCH */
 document.getElementById("search").addEventListener("input",function(){
-  const value = this.value.toLowerCase();
-  renderProducts(
-    products.filter(p => p.name.toLowerCase().includes(value))
-  );
+  const v=this.value.toLowerCase();
+  renderProducts(products.filter(p=>p.name.toLowerCase().includes(v)));
 });
 
-/* ORDER PAGE */
+
+
 function goToOrder(name, price){
-  window.location.href =
-    "order.html" +
-    "?name=" + encodeURIComponent(name) +
-    "&price=" + price;
+  window.location.href = "order.html?name="+encodeURIComponent(name)+"&price="+price;
 }
 
-/* MENU */
+
 function toggleMenu(){
   menu.classList.add("active");
   overlay.classList.add("active");
@@ -229,9 +253,9 @@ function closeMenu(){
   overlay.classList.remove("active");
 }
 
-function openCustomerSupport(){ window.location.href = SUPPORT_PAGE_URL }
-function openOfferPage(){ window.location.href = OFFER_PAGE_URL }
-function openTrackingPage(){ window.location.href = TRACKING_PAGE_URL }
+function openCustomerSupport(){location.href=SUPPORT_PAGE_URL}
+function openOfferPage(){location.href=OFFER_PAGE_URL}
+function openTrackingPage(){location.href=TRACKING_PAGE_URL}
 </script>
 
 </body>
