@@ -4,13 +4,20 @@
 <meta charset="UTF-8">
 <title>Order Tracking | Al-Amanah</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=400, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 :root{
-  --gold:#c9a24d;
-  --dark:#111;
-  --grey:#888;
+  --gold:#d4af37;
+  --dark:#000000;
+  --medium-dark:#1a1a1a;
+  --light-grey:#a0a0a0;
+  --white:#ffffff;
+  --red-cancel:#e74c3c;
 }
 
 *{
@@ -18,86 +25,121 @@
   font-family:'Poppins',sans-serif;
 }
 
-body{
+/* 🔒 FULL PAGE 400px LOCK */
+html, body{
   margin:0;
-  background:#f5f5f5;
-  color:#000;
+  padding:0;
+  width:400px;
+  max-width:400px;
+  min-width:400px;
+  overflow-x:hidden;
+  background:var(--medium-dark);
+  color:var(--white);
 }
 
-/* Header */
+/* Center the 400px page on big screens */
+body{
+  margin:0 auto;
+}
+
+/* --- Header --- */
 header{
-  background:#000;
-  color:#fff;
-  padding:15px;
+  width:400px;
+  background:var(--dark);
+  color:var(--gold);
+  padding:20px 16px;
   text-align:center;
-  font-size:22px;
-  font-weight:600;
+  font-size:24px;
+  font-weight:700;
   letter-spacing:1px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.5);
 }
 
-/* Container */
+/* --- Container --- */
 .container{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
+  width:400px;
+  padding:0 16px;
+  margin:30px auto;
 }
 
-/* Product Info */
-.product-info{
-  background:#fff;
-  border-radius:14px;
-  padding:15px;
-  margin-bottom:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,.1);
+/* --- Card --- */
+.card{
+  background:var(--dark);
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.3),
+             0 0 0 1px rgba(255,255,255,0.05);
+  margin-bottom:25px;
+  border-left:5px solid var(--gold);
 }
 
 .product-info h2{
   margin:0;
   font-size:24px;
+  font-family:'Playfair Display',serif;
 }
 
 .price{
-  font-size:20px;
+  font-size:22px;
   font-weight:600;
   color:var(--gold);
+  margin-top:8px;
 }
 
-/* Timeline */
+/* --- Timeline --- */
 .timeline{
-  border-left:3px solid var(--gold);
+  border-left:3px solid rgba(212,175,55,0.3);
   padding-left:25px;
-  margin-top:20px;
 }
 
 .step{
-  margin-bottom:25px;
+  margin-bottom:28px;
   position:relative;
-  color:var(--grey);
+  color:var(--light-grey);
 }
 
 .step::before{
   content:"";
   width:16px;
   height:16px;
-  background:#333;
+  background:var(--medium-dark);
+  border:2px solid var(--light-grey);
   border-radius:50%;
   position:absolute;
-  left:-35px;
-  top:2px;
+  left:-34px;
+  top:50%;
+  transform:translateY(-50%);
 }
 
 .step.active{
-  color:#000;
+  color:var(--white);
   font-weight:600;
 }
 
 .step.active::before{
   background:var(--gold);
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(212,175,55,0.3);
 }
 
-.cancel{
-  color:red;
-  margin-top:20px;
+/* --- Cancel Box --- */
+.cancel-box{
+  background:var(--dark);
+  border-radius:16px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 0 0 3px var(--red-cancel),
+             0 15px 35px rgba(231,76,60,0.3);
+  margin-top:40px;
+}
+
+.cancel-box h2{
+  color:var(--red-cancel);
+  font-size:26px;
+}
+
+#cancelReason{
+  color:var(--red-cancel);
   font-weight:600;
 }
 </style>
@@ -109,23 +151,26 @@ header{
 
 <div class="container">
 
-  <!-- PRODUCT INFO -->
-  <div class="product-info">
+  <div class="card product-info">
     <h2 id="pName">Product Name / পণ্যের নাম</h2>
     <div class="price">₹ <span id="pPrice">0</span></div>
   </div>
 
-  <!-- TRACKING TIMELINE -->
-  <div class="timeline">
-    <div class="step" id="step1">🧾 Order Placed / অর্ডার দেওয়া হয়েছে</div>
-    <div class="step" id="step2">✔ Order Confirmed / অর্ডার নিশ্চিত হয়েছে</div>
-    <div class="step" id="step3">📦 Packaging / প্যাকেজিং</div>
-    <div class="step" id="step4">🚚 Delivery Processing / ডেলিভারি প্রক্রিয়াধীন</div>
-    <div class="step" id="step5">⭐ Completed / সম্পন্ন হয়েছে</div>
+  <div class="cancel-box" id="cancelBox" style="display:none">
+    <h2>❌ YOUR ORDER IS CANCELLED</h2>
+    <p>আপনার অর্ডার বাতিল করা হয়েছে</p>
+    <p id="cancelReason"></p>
   </div>
 
-  <!-- CANCEL REASON -->
-  <p class="cancel" id="cancelReason"></p>
+  <div class="card" id="timelineBox">
+    <div class="timeline">
+      <div class="step" id="step1">Order Placed / অর্ডার দেওয়া হয়েছে</div>
+      <div class="step" id="step2">Order Confirmed / অর্ডার নিশ্চিত</div>
+      <div class="step" id="step3">Packaging / প্যাকেজিং</div>
+      <div class="step" id="step4">Delivery Processing / ডেলিভারি চলছে</div>
+      <div class="step" id="step5">Completed / সম্পন্ন</div>
+    </div>
+  </div>
 
 </div>
 
@@ -145,40 +190,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* GET ORDER ID FROM URL */
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(location.search);
 const orderId = params.get("id");
 
 if(orderId){
-  const docRef = doc(db,"orders",orderId);
-  getDoc(docRef).then(docSnap=>{
-    if(docSnap.exists()){
-      const data = docSnap.data();
-      document.getElementById("pName").innerText = data.productName || "Product / পণ্য";
-      document.getElementById("pPrice").innerText = data.price || "0";
-
-      // Update timeline
-      const status = data.status || "placed";
-      const steps = ["placed","confirmed","packaging","delivery","completed"];
-      steps.forEach((s,i)=>{
-        if(steps.indexOf(status) >= i){
-          document.getElementById("step"+(i+1)).classList.add("active");
-        }
-      });
-
-      // Cancel reason
-      if(data.cancelReason){
-        document.getElementById("cancelReason").innerText = "Cancel Reason / বাতিলের কারণ: " + data.cancelReason;
-      }
-
-    } else {
+  const ref = doc(db,"orders",orderId);
+  getDoc(ref).then(snap=>{
+    if(!snap.exists()){
       alert("Order not found / অর্ডার পাওয়া যায়নি");
+      return;
     }
-  }).catch(err=>{
-    alert("Error fetching order / অর্ডার আনার সময় ত্রুটি: " + err);
+
+    const d = snap.data();
+    pName.innerText = d.productName || "পণ্য";
+    pPrice.innerText = d.price || "0";
+
+    if(d.status === "cancelled"){
+      timelineBox.style.display="none";
+      cancelBox.style.display="block";
+      cancelReason.innerText = "কারণ: " + (d.cancelReason || "উল্লেখ করা হয়নি");
+      return;
+    }
+
+    const steps=["placed","confirmed","packaging","delivery","completed"];
+    steps.forEach((s,i)=>{
+      if(steps.indexOf(d.status)>=i){
+        document.getElementById("step"+(i+1)).classList.add("active");
+      }
+    });
   });
 }else{
-  alert("No order ID provided / কোনো অর্ডার আইডি পাওয়া যায়নি");
+  alert("No order ID / অর্ডার আইডি নেই");
 }
 </script>
 
