@@ -6,6 +6,8 @@
 
 <meta name="viewport" content="width=400, user-scalable=no">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
 :root{
   --bg:#0b0f0c;
@@ -77,7 +79,7 @@ body{
   color:#fff;
 }
 
-/* Side Menu (ICON ONLY) */
+/* Side Menu (Premium Look) */
 .side-menu{
   position:fixed;
   top:0;
@@ -91,13 +93,27 @@ body{
 }
 .side-menu.active{left:0}
 
+/* 🌟 Modified for smaller text and better padding */
 .side-menu div{
-  padding:22px 0;
-  font-size:30px;
-  text-align:center;
+  padding:16px 0;
+  font-size:18px;
+  text-align:left;
+  padding-left:15px;
   border-bottom:1px solid #1f3d2b;
   color:var(--gold);
   cursor:pointer;
+  transition:.2s;
+}
+.side-menu div:hover{
+    background: #1f3d2b;
+}
+
+/* 🌟 Styling for the Font Awesome Icons within the menu */
+.side-menu div i{
+    margin-right: 15px;
+    font-size: 20px;
+    width: 25px;
+    text-align: center;
 }
 
 /* Page */
@@ -141,22 +157,24 @@ body{
 
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-<!-- SIDE MENU -->
 <div class="side-menu" id="menu">
   <div onclick="openCustomerSupport()">
-    📞CustomerSupport</div>
-  <div onclick="openOfferPage()">🎁 Gift</div>
-  <div onclick="openTrackingPage()">📦 Order Tracking</div>
+    <i class="fa-solid fa-headset"></i> Customer Support
+  </div>
+  <div onclick="openOfferPage()">
+    <i class="fa-solid fa-gift"></i> Gift Offers
+  </div>
+  <div onclick="openTrackingPage()">
+    <i class="fa-solid fa-truck"></i> Order Tracking
+  </div>
 </div>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="menu-btn" onclick="toggleMenu()">☰</div>
   <div class="brand">Al-Amanah</div>
   <input class="search" id="search" placeholder="Search">
 </div>
 
-<!-- HOME -->
 <div id="home" class="page"></div>
 
 </div>
@@ -175,7 +193,7 @@ const products = [
     description: "Premium long lasting rose fragrance",
     price: 500,
     offerPrice: 420,
-    image: "watermark.png"
+    image: "image/watermark.png"
   },
 
   {
@@ -183,7 +201,7 @@ const products = [
     description: "Strong Arabic oud fragrance",
     price: 800,
     offerPrice: 650,
-    image: "watermark.png"
+    image: "image/watermark.png"
   },
 
   /* 🔽 এখান থেকে নতুন প্রোডাক্ট এড করুন */
@@ -201,7 +219,7 @@ const products = [
     description: "Strong Arabic oud fragrance",
     price: 8000,
     offerPrice: 6500,
-    image: "watermark.png"
+    image: "image/watermark.png"
   },
 ];
 
@@ -260,3 +278,4 @@ function openTrackingPage(){location.href=TRACKING_PAGE_URL}
 
 </body>
 </html>
+
